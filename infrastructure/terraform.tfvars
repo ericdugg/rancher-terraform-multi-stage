@@ -15,13 +15,12 @@ ssh_key_path           = "~/.ssh/rancher-id_rsa"
 ssh_config_path        ="~/.ssh/config"
 
 lb_floating_ip         = "192.168.210.242"
-# AWS Provide
+# AWS Provider
 aws_profile            = "oss"
 aws_region             = "ap-southeast-2"
 aws_role_arn           = "arn:aws:iam::085032814280:role/OSS_Terraform_no_MFA"
 
 vm_username            = "centos"
-rancher_server_dns     = "rancher.lab.oss.nz"
 
 # VM Specs Config
 lb_vm_spec = {
