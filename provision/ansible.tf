@@ -1,6 +1,6 @@
 data "template_file" "nodes" {
   template = file("files/host_item.tmpl")
-  count    = length(vsphere_virtual_machine.node)
+  count    = length(data.terraform_remote_state.infrastructure.node_ips)
 
   vars = {
     host    = "node${count.index}.${var.domain}"
