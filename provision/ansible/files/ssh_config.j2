@@ -1,0 +1,9 @@
+{% for host in groups['all'] %}
+Host {{ hostvars[host]['ansible_hostname'] }}
+  Hostname {{ hostvars[host]['ansible_host'] }}
+  User {{ ansible_user }}
+  IdentityFile {{ ssh_key_path }}
+  ServerAliveInterval 300
+  ServerAliveCountMax 2
+
+{% endfor %}

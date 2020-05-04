@@ -1,0 +1,23 @@
+---
+# tasks file for keepalived
+- name: install keepalived
+  yum:
+    name: keepalived
+    state: latest
+
+- name: enable keepalived at boot
+  systemd:
+    name: keepalived
+    enabled: yes
+
+- name: configure keepalived
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    mode: 0644
+  notify: restart keepalived
+
+- name: start keepalived
+  systemd:
+    name: keepalived
+    state: started

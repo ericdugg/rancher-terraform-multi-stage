@@ -1,0 +1,14 @@
+- name: Check if swap is on
+  command: swapon -s
+  register: swap_active
+  changed_when: false
+
+- name: Disable swap (if configured)
+  command: swapoff -a
+  when: swap_active.stdout|length > 0 
+
+- name: Disable swap in fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+    replace: '# \1'

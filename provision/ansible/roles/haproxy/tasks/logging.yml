@@ -1,0 +1,29 @@
+- name: Create directory /var/lib/haproxy/dev
+  file:
+    path: /var/lib/haproxy/dev
+    state: directory
+
+- name: Test if /var/lib/haproxy/dev/log exists
+  stat:
+    path: /var/lib/haproxy/dev/log
+  register: file_details
+
+- name: Create /var/lib/haproxy/dev/log 
+  file:
+    path: /var/lib/haproxy/dev/log
+    state: touch
+  notify: haproxy-logging
+  when: file_details.stat.path is not defined 
+
+- name: Configure haproxy rsyslog configuration
+  template:
+    src: haproxy.conf.j2
+    dest: /etc/rsyslog.d/haproxy.conf
+    mode: 0644
+  notify: haproxy-logging
+
+- name: Configure haproxy logrotate
+  template:
+    src: haproxy.j2
+    dest: /etc/logrotate.d/haproxy
+    mode: 0644

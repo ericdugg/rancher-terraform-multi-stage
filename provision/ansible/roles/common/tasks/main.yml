@@ -1,0 +1,24 @@
+---
+# tasks file for common
+- name: Set Hostname
+  hostname:
+    name: "{{inventory_hostname}}"
+    use: redhat
+
+- name: Put SELinux in permissive mode
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: Install common packages
+  yum:
+    name:
+      - git
+      - yum-utils
+      - bind-utils
+    state: present
+
+- name: Update all packages
+  yum:
+    name: '*'
+    state: latest

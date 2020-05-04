@@ -1,0 +1,19 @@
+---
+# tasks file for rancher_prep
+- include_tasks: docker.yml
+  tags: docker
+
+- include_tasks: swap.yml
+  tags: swap
+
+- include_tasks: kernel.yml
+  tags: kernel
+
+- include_tasks: sshd.yml
+  tags: sshd 
+
+- include_tasks: update-ca-certs.yml
+  when:
+    - rancher_prep_update_ca_certs is defined
+    - rancher_prep_update_ca_certs == 'yes'
+  tags: ca

@@ -1,0 +1,30 @@
+- name: Check if hatop binary is installed
+  stat:
+    path: "{{ hatop_install_dir }}/hatop"
+  register: hatop_binary_installed
+
+- name: Install hatop
+  block: 
+    - name: Ensure hatop binary is downloaded
+      get_url:
+        url: "{{ hatop_download_url }}"
+        dest: "{{ hatop_src_dir }}"
+
+    - name: Ensure hatop tarball is unarchived
+      shell: >
+        tar xvf "{{ hatop_src_dir }}/{{ hatop_archive_name }}" -C "{{ hatop_src_dir }}"
+
+    - name: Ensure hatop binary is installed
+      shell: >
+        cd "{{ hatop_src_dir }}/{{ hatop_dir_name }}" && install -m 755 bin/hatop "{{ hatop_install_dir }}"
+
+    - name: Ensure hatop man file is installed
+      shell: >
+        cd "{{ hatop_src_dir }}/{{ hatop_dir_name }}" && install -m 644 man/hatop.1 /usr/local/share/man/man1
+  when:
+    - hatop_binary_installed.stat.path is not defined
+
+- name: "Remove {{ hatop_src_dir }}/{{ hatop_archive_name}}"
+  file:
+    path: "{{ hatop_src_dir }}/{{ hatop_archive_name}}"
+    state: absent

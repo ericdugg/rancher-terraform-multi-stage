@@ -1,0 +1,13 @@
+---
+# handlers file for haproxy
+- name: restart rsyslog
+  listen: haproxy-logging
+  systemd:
+    name: rsyslog
+    state: restarted
+
+- name: restart haproxy
+  listen: haproxy-logging
+  systemd:
+    name: haproxy
+    state: restarted

@@ -1,0 +1,7 @@
+docker_version: '19.03.8'
+docker_users: 
+  - "{{ ansible_user }}"
+rancher_prep_update_ca_certs: 'yes'
+rancher_prep_ca_certs:
+  - fakelerootx1.pem
+  - fakeleintermediatex1.pem

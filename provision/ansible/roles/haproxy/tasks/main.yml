@@ -1,0 +1,37 @@
+---
+# tasks file for haproxy
+- name: install haproxy
+  yum:
+    name: haproxy
+    state: latest
+
+- name: enable haproxy at boot
+  systemd:
+    name: haproxy
+    enabled: yes
+
+- name: allow haproxy to bind to shared IP address
+  sysctl:
+    name: net.ipv4.ip_nonlocal_bind
+    value: '1'
+    state: present
+
+- name: configure haproxy
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    mode: 0640
+  notify: restart haproxy
+
+- include_tasks: logging.yml
+
+- include_tasks: hatop.yml
+  when: 
+    - install_ha_top is defined
+    - install_ha_top == "yes"
+
+- name: start haproxy
+  systemd:
+    name: haproxy
+    state: started
+  

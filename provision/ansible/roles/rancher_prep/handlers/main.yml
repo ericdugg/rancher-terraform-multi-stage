@@ -1,0 +1,9 @@
+---
+# handlers file for rancher_prep
+- name: restart docker
+  service: "name=docker state={{ docker_restart_handler_state }}"
+
+- name: restart sshd
+  systemd:
+    name: sshd
+    state: restarted

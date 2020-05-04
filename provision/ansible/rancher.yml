@@ -1,0 +1,25 @@
+- name: Provision Load Balancers
+  hosts: lbs
+  become: yes
+  tags: lbs
+  roles:
+    - role: common
+      tags: common
+    - role: keepalived
+      tags: keepalived
+    - role: haproxy
+      tags: haproxy
+      when: lb_to_use == 'haproxy'
+    - role: nginx
+      tags: nginx
+      when: lb_to_use == 'nginx'
+
+- name: Provision Rancher Nodes
+  hosts: nodes
+  become: yes
+  tags: nodes
+  roles:
+    - role: common
+      tags: common
+    - role: rancher_prep
+      tags: rancher_prep

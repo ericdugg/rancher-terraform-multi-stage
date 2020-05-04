@@ -1,0 +1,6 @@
+#{{ ansible_managed }}
+$AddUnixListenSocket /var/lib/haproxy/dev/log
+# Creating separate log files based on the severity
+local0.* /var/log/haproxy/haproxy-traffic.log
+local0.notice /var/log/haproxy/haproxy-admin.log
+& stop

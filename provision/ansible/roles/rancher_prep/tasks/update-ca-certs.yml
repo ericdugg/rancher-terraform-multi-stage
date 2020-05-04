@@ -1,0 +1,16 @@
+- name: Make sure the folder exists
+  file:
+    path: /etc/pki/ca-trust/source/anchors
+    state: directory
+
+- name: Copy PEM into folder
+  copy:
+    src: "files/{{ item }}"
+    dest: "/etc/pki/ca-trust/source/anchors/{{ item }}"
+  with_items:
+    - "{{ rancher_prep_ca_certs }}"
+  register: result
+
+- name: Update CA Trust
+  command: update-ca-trust
+  when: result is changed
