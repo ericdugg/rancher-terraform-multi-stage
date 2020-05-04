@@ -4,7 +4,7 @@ vsphere_dcname         = "OSS-Test"
 vsphere_cluster_name   = "OSS-Test"
 vsphere_datastore      = "PureM10-VVOL"
 vsphere_netname        = "Test"
-vsphere_tmplname       = "centos7"
+vsphere_tmplname       = "centos7-cloud-init"
 vsphere_folder         = "ED-rancher"
 vsphere_storage_policy = "VVol No Requirements Policy"
 
@@ -19,7 +19,6 @@ lb_floating_ip         = "192.168.210.242"
 aws_profile            = "oss"
 aws_region             = "ap-southeast-2"
 aws_role_arn           = "arn:aws:iam::085032814280:role/OSS_Terraform_no_MFA"
-
 vm_username            = "centos"
 
 # VM Specs Config

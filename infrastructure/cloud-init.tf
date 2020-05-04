@@ -11,6 +11,6 @@ data "template_cloudinit_config" "config" {
 data "template_file" "cloud-config" {
   template = file("${path.module}/files/cloud-config.tpl")
   vars = {
-    authorized_key = file(var.ssh_public_key_location)
+    authorized_key = file(var.ssh_key_path)
   }
 }
