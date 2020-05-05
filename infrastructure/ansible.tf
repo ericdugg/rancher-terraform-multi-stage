@@ -1,3 +1,11 @@
+data "template_file" "vault" {
+  template = file("${path.module}/files/vault.tmpl")
+
+  vars = {
+    password = var.ansible_vault_password
+  }
+}
+  
 data "template_file" "nodes" {
   template = file("${path.module}/files/host_item.tmpl")
   count    = length(vsphere_virtual_machine.node)
@@ -27,6 +35,12 @@ data "template_file" "inventory" {
     nodes           = "${join("\n", data.template_file.nodes.*.rendered)}"
     lbs             = "${join("\n", data.template_file.lbs.*.rendered)}"
   }
+}
+
+resource "local_file" "vault_pwd_file" {
+  content         = data.template_file.vault.rendered
+  filename        = "${path.module}/../vault.pwd"
+  file_permission = "0640"
 }
 
 resource "local_file" "host_vars_file_lb" {
