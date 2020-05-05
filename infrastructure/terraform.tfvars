@@ -1,10 +1,11 @@
 vsphere_user           = "eduggan@oss.co.nz"
+vsphere_password       = ""
 vsphere_server         = "vc03av.oss.co.nz"
 vsphere_dcname         = "OSS-Test"
 vsphere_cluster_name   = "OSS-Test"
 vsphere_datastore      = "PureM10-VVOL"
 vsphere_netname        = "Test"
-vsphere_tmplname       = "centos7-cloud-init"
+vsphere_tmplname       = "centos7"
 vsphere_folder         = "ED-rancher"
 vsphere_storage_policy = "VVol No Requirements Policy"
 

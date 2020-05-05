@@ -1,0 +1,27 @@
+- name: Propagate ssh pub key and configure sudo
+  hosts: all
+  become: no
+  vars:
+    project: rancher
+    ssh_key_path: "~/.ssh/{{ project }}-id_rsa"
+    ssh_public_key_file: "{{ ssh_key_path }}.pub"
+  tasks:
+    - name: Generate ssh key pair
+      openssh_keypair:
+        path: "{{ ssh_key_path }}"
+        comment: "{{ project }}"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Copy public key
+      authorized_key:
+        user: "{{ansible_user}}"
+        state: present
+        key: "{{ lookup('file', ssh_public_key_file) }}"
+        
+    - name: Setting passwordless sudo
+      become: yes
+      lineinfile:
+        path: /etc/sudoers
+        regexp: '^%wheel'
+        line: '%wheel  ALL=(ALL)  NOPASSWD: ALL'

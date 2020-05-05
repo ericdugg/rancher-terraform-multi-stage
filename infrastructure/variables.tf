@@ -113,3 +113,9 @@ variable "vm_username" {
   description = "Username used for SSH access to the VMs"
   default     = "centos"
 }
+
+variable "vm_username_password" {
+  type        = string
+  description = "Password for username used for SSH access to the VMs"
+  default     = "centos"
+}

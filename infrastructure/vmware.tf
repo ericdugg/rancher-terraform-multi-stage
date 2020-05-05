@@ -80,11 +80,6 @@ resource "vsphere_virtual_machine" "node" {
     }
   }
 
-  extra_config = {
-    "guestinfo.userdata"          = data.template_cloudinit_config.config.rendered
-    "guestinfo.userdata.encoding" = "gzip+base64"
-  }
-
 }
 
 resource "vsphere_virtual_machine" "lb" {
@@ -133,11 +128,6 @@ resource "vsphere_virtual_machine" "lb" {
       ipv4_gateway    = var.ipv4_gateway
       timeout         = 30
     }
-  }
-
-  extra_config = {
-    "guestinfo.userdata"          = data.template_cloudinit_config.config.rendered
-    "guestinfo.userdata.encoding" = "gzip+base64"
   }
 
 }
