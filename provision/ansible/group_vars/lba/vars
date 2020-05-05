@@ -1,6 +1,6 @@
-keepalived_vip: '192.168.210.242'
+keepalived_vip: '192.168.210.245'
 keepalived_router_id: 'rancher'
-keepalived_virtual_router_id: '54'
+keepalived_virtual_router_id: '55'
 haproxy_anchor_ip: "{{ keepalived_vip }}"
 haproxy_admin_user: "{{ vault_haproxy_admin_user }}"
 haproxy_admin_password: "{{ vault_haproxy_admin_password }}"
