@@ -6,6 +6,25 @@ events {
     worker_connections 8192;
 }
 
+{% if role == 'api' %}
+stream {
+    upstream api_servers_https {
+        least_conn;
+        {% for host in groups['nodes'] %}
+        server {{ hostvars[host]['ansible_host'] }}:6443 max_fails=3 fail_timeout=5s;
+        {% endfor %}
+    }
+    server {
+        listen     443;
+        proxy_pass api_servers_https;
+    }
+    server {
+        listen     6443;
+        proxy_pass api_servers_https;
+    }
+
+}
+{% elif role == 'rancher' %}
 stream {
     upstream rancher_servers_http {
         least_conn;
@@ -30,3 +49,4 @@ stream {
     }
 
 }
+{% endif %}

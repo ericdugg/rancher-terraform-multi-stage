@@ -15,7 +15,9 @@ ssh_key_path           = "~/.ssh/rancher-id_rsa"
 # SSH config path
 ssh_config_path        ="~/.ssh/config"
 
-lb_floating_ip         = "192.168.210.242"
+lb_rancher_floating_ip = "192.168.210.242"
+lb_api_floating_ip     = "192.168.210.245"
+
 # AWS Provider
 aws_profile            = "oss"
 aws_region             = "ap-southeast-2"
@@ -42,13 +44,15 @@ dns_servers    = ["192.168.213.4", "192.168.214.4"]
 time_zone      = "Pacific/Auckland"
 
 vms_ips = {
-  lb0          = "192.168.210.240",
-  lb1          = "192.168.210.241",
-  node0        = "192.168.210.243",
-  node1        = "192.168.210.244",
-  node2        = "192.168.210.245",
+  lbr0          = "192.168.210.240",
+  lbr1          = "192.168.210.241",
+  lba0          = "192.168.210.243",
+  lba1          = "192.168.210.244",
+  node0        = "192.168.210.246",
+  node1        = "192.168.210.247",
+  node2        = "192.168.210.248",
   ipv4_netmask = 24,
 }
 
 # Ansible
-ansible_vault_password = "your ansible vault password"
+ansible_vault_password = "Eight22"

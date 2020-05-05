@@ -66,8 +66,12 @@ variable "nameprefix" {
   default     = "rancher"
 }
 
-variable "lb_floating_ip" {
-  description = "Keepalived floating IP that dns name resolves to"
+variable "lb_rancher_floating_ip" {
+  description = "Keepalived floating IP for rancher that dns name resolves to"
+}
+
+variable "lb_api_floating_ip" {
+  description = "Keepalived floating IP for rancher kubernetes api that dns name resolves to"
 }
 
 variable "vms_ips" {

@@ -4,22 +4,40 @@ data "aws_route53_zone" "public" {
   private_zone = false
 }
   
-# Standard route53 DNS record for "rancher" pointing to vmware host
+# Standard route53 DNS record for "rancher" pointing to floating IP
 resource "aws_route53_record" "rancher" {
   zone_id = data.aws_route53_zone.public.zone_id
   name    = "rancher.${data.aws_route53_zone.public.name}"
   type    = "A"
   ttl     = "300"
-  records = [ var.lb_floating_ip ]
+  records = [ var.lb_rancher_floating_ip ]
 }
 
-resource "aws_route53_record" "lb" {
+# api
+resource "aws_route53_record" "api" {
   zone_id = data.aws_route53_zone.public.zone_id
-  count   = length(vsphere_virtual_machine.lb)
-  name    = "lb${count.index}.${data.aws_route53_zone.public.name}"
+  name    = "api.rancher.${data.aws_route53_zone.public.name}"
   type    = "A"
   ttl     = "300"
-  records = [ vsphere_virtual_machine.lb[count.index].default_ip_address ]
+  records = [ var.lb_api_floating_ip ]
+}
+
+resource "aws_route53_record" "lbr" {
+  zone_id = data.aws_route53_zone.public.zone_id
+  count   = length(vsphere_virtual_machine.lbr)
+  name    = "lbr${count.index}.${data.aws_route53_zone.public.name}"
+  type    = "A"
+  ttl     = "300"
+  records = [ vsphere_virtual_machine.lbr[count.index].default_ip_address ]
+}
+
+resource "aws_route53_record" "lba" {
+  zone_id = data.aws_route53_zone.public.zone_id
+  count   = length(vsphere_virtual_machine.lba)
+  name    = "lba${count.index}.${data.aws_route53_zone.public.name}"
+  type    = "A"
+  ttl     = "300"
+  records = [ vsphere_virtual_machine.lba[count.index].default_ip_address ]
 }
 
 resource "aws_route53_record" "node" {

@@ -82,9 +82,9 @@ resource "vsphere_virtual_machine" "node" {
 
 }
 
-resource "vsphere_virtual_machine" "lb" {
+resource "vsphere_virtual_machine" "lbr" {
   count            = var.lb_count
-  name             = "ED-${var.nameprefix}-lb${count.index}"
+  name             = "ED-${var.nameprefix}-lbr${count.index}"
   annotation       = "rancher"
   datastore_id     = data.vsphere_datastore.datastore.id
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
@@ -115,12 +115,62 @@ resource "vsphere_virtual_machine" "lb" {
 
     customize {
       linux_options {
-        host_name = "lb${count.index}"
+        host_name = "lbr${count.index}"
         domain    = var.domain
         time_zone = var.time_zone
       }
       network_interface {
-        ipv4_address = var.vms_ips["lb${count.index}"]
+        ipv4_address = var.vms_ips["lbr${count.index}"]
+        ipv4_netmask = var.vms_ips["ipv4_netmask"]
+      }
+      dns_suffix_list = [var.domain]
+      dns_server_list = var.dns_servers
+      ipv4_gateway    = var.ipv4_gateway
+      timeout         = 30
+    }
+  }
+
+}
+
+resource "vsphere_virtual_machine" "lba" {
+  count            = var.lb_count
+  name             = "ED-${var.nameprefix}-lba${count.index}"
+  annotation       = "rancher"
+  datastore_id     = data.vsphere_datastore.datastore.id
+  resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
+  folder           = var.vsphere_folder
+
+  num_cpus = var.lb_vm_spec["num_cpus"]
+  memory   = var.lb_vm_spec["memory"]
+  guest_id = data.vsphere_virtual_machine.template.guest_id
+
+  scsi_type         = data.vsphere_virtual_machine.template.scsi_type
+  storage_policy_id = data.vsphere_storage_policy.default.id
+
+  network_interface {
+    network_id   = data.vsphere_network.network.id
+    adapter_type = data.vsphere_virtual_machine.template.network_interface_types[0]
+  }
+
+  disk {
+    label             = "disk0"
+    size              = var.lb_vm_spec["disk"] # data.vsphere_virtual_machine.template.disks.0.size
+    eagerly_scrub     = data.vsphere_virtual_machine.template.disks.0.eagerly_scrub
+    thin_provisioned  = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
+    storage_policy_id = data.vsphere_storage_policy.default.id
+  }
+
+  clone {
+    template_uuid = data.vsphere_virtual_machine.template.id
+
+    customize {
+      linux_options {
+        host_name = "lba${count.index}"
+        domain    = var.domain
+        time_zone = var.time_zone
+      }
+      network_interface {
+        ipv4_address = var.vms_ips["lba${count.index}"]
         ipv4_netmask = var.vms_ips["ipv4_netmask"]
       }
       dns_suffix_list = [var.domain]

@@ -1,5 +1,5 @@
 - name: Provision Load Balancers
-  hosts: lbs
+  hosts: lbr:lba
   become: yes
   tags: lbs
   roles:

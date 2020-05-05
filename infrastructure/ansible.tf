@@ -16,13 +16,23 @@ data "template_file" "nodes" {
   }
 }
 
-data "template_file" "lbs" {
+data "template_file" "lbr" {
   template = file("${path.module}/files/host_item.tmpl")
-  count    = length(vsphere_virtual_machine.lb)
+  count    = length(vsphere_virtual_machine.lbr)
 
   vars = {
-    host    = "lb${count.index}.${var.domain}"
-    host_ip = element(vsphere_virtual_machine.lb.*.default_ip_address, count.index)
+    host    = "lbr${count.index}.${var.domain}"
+    host_ip = element(vsphere_virtual_machine.lbr.*.default_ip_address, count.index)
+  }
+}
+
+data "template_file" "lba" {
+  template = file("${path.module}/files/host_item.tmpl")
+  count    = length(vsphere_virtual_machine.lba)
+
+  vars = {
+    host    = "lba${count.index}.${var.domain}"
+    host_ip = element(vsphere_virtual_machine.lba.*.default_ip_address, count.index)
   }
 }
 
@@ -33,7 +43,8 @@ data "template_file" "inventory" {
     ansible_user    = var.vm_username
     ssh_private_key = var.ssh_key_path
     nodes           = "${join("\n", data.template_file.nodes.*.rendered)}"
-    lbs             = "${join("\n", data.template_file.lbs.*.rendered)}"
+    lbr             = "${join("\n", data.template_file.lbr.*.rendered)}"
+    lba             = "${join("\n", data.template_file.lba.*.rendered)}"
   }
 }
 
@@ -43,10 +54,17 @@ resource "local_file" "vault_pwd_file" {
   file_permission = "0640"
 }
 
-resource "local_file" "host_vars_file_lb" {
-  count           = length(vsphere_virtual_machine.lb)
+resource "local_file" "host_vars_file_lbr" {
+  count           = length(vsphere_virtual_machine.lbr)
   content         = "keepalived_priority: ${101 - count.index}\n"
-  filename        = "${path.module}/../provision/ansible/host_vars/lb${count.index}.${var.domain}"
+  filename        = "${path.module}/../provision/ansible/host_vars/lbr${count.index}.${var.domain}"
+  file_permission = "0664"
+}
+
+resource "local_file" "host_vars_file_lba" {
+  count           = length(vsphere_virtual_machine.lba)
+  content         = "keepalived_priority: ${101 - count.index}\n"
+  filename        = "${path.module}/../provision/ansible/host_vars/lba${count.index}.${var.domain}"
   file_permission = "0664"
 }
 

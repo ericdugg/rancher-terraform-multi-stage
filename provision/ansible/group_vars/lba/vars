@@ -1,0 +1,9 @@
+keepalived_vip: '192.168.210.242'
+keepalived_router_id: 'rancher'
+keepalived_virtual_router_id: '54'
+haproxy_anchor_ip: "{{ keepalived_vip }}"
+haproxy_admin_user: "{{ vault_haproxy_admin_user }}"
+haproxy_admin_password: "{{ vault_haproxy_admin_password }}"
+install_ha_top: 'yes'
+lb_to_use: 'nginx'
+role: 'api'

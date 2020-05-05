@@ -3,11 +3,6 @@ output "node_ips" {
   description = "The IP addresses of the nodes"
 }
 
-output "lbs_ips" {
-  value       = ["${vsphere_virtual_machine.lb.*.default_ip_address}"]
-  description = "The IP addresses of the load balancers"
-}
-
 output "domain" {
   value       = var.domain
   description = "domain var exported for use by other stages"
@@ -36,4 +31,9 @@ output "cert_key" {
 output "rancher_dns_name" {
   value       = aws_route53_record.rancher.fqdn
   description = "The fqdn to connect to rancher"
+}
+
+output "rancher_api_dns_name" {
+  value       = aws_route53_record.api.fqdn
+  description = "The fqdn to connect to rancher kubernetes api"
 }

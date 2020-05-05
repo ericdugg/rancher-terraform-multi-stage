@@ -6,3 +6,4 @@ haproxy_admin_user: "{{ vault_haproxy_admin_user }}"
 haproxy_admin_password: "{{ vault_haproxy_admin_password }}"
 install_ha_top: 'yes'
 lb_to_use: 'nginx'
+role: 'rancher'
