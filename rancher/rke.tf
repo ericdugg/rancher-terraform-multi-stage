@@ -6,13 +6,21 @@ resource "rke_cluster" "rancher_cluster" {
 
   dynamic nodes {
     for_each = local.node_ips
-    iterator = "ip_addr"
+    iterator = ip_addr
     content {
-      address          = ip_addr.value
-      user             = var.vm_username
+      address          = tostring(ip_addr.value)
+      user             = local.vm_username
       role             = ["controlplane", "etcd", "worker"]
-      ssh_key          = tls_private_key.ssh_key.private_key_pem
+      ssh_key          = pathexpand(file(local.ssh_key_path))
     }
+  }
+
+  authentication {
+    strategy = "x509"
+
+    sans = [
+      local.api_server_hostname
+    ]
   }
 
   services_etcd {
@@ -21,4 +29,14 @@ resource "rke_cluster" "rancher_cluster" {
       retention      = 6
     }
   }
+}
+
+resource "local_file" "kube_cluster_yml" {
+  filename = "${path.root}/outputs/kube_config_cluster.yml"
+  content = templatefile("${path.module}/files/kube_config_cluster.yml", {
+    api_server_url     = local.api_server_url
+    rancher_cluster_ca = base64encode(rke_cluster.rancher_cluster.ca_crt)
+    rancher_user_cert  = base64encode(rke_cluster.rancher_cluster.client_cert)
+    rancher_user_key   = base64encode(rke_cluster.rancher_cluster.client_key)
+  })
 }
