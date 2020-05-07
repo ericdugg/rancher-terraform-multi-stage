@@ -8,7 +8,7 @@ resource "rke_cluster" "rancher_cluster" {
     for_each = local.node_ips
     iterator = ip_addr
     content {
-      address          = tostring(ip_addr.value)
+      address          = ip_addr.value
       user             = local.vm_username
       role             = ["controlplane", "etcd", "worker"]
       ssh_key          = pathexpand(file(local.ssh_key_path))
@@ -23,10 +23,12 @@ resource "rke_cluster" "rancher_cluster" {
     ]
   }
 
-  services_etcd {
-    backup_config {
-      interval_hours = 12
-      retention      = 6
+  services {
+    etcd {
+      backup_config {
+        interval_hours = 12
+        retention      = 6
+      }
     }
   }
 }
