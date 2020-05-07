@@ -1,9 +1,7 @@
 # install rancher
 resource "helm_release" "rancher" {
   name       = "rancher"
-  repository = data.helm_repository.rancher_stable.metadata[0].name
   chart      = var.rancher_chart
-  version    = "v${local.rancher_version}"
   namespace  = "cattle-system"
 
   set {
