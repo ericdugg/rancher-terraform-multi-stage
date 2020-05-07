@@ -6,3 +6,4 @@ hosts.vsphere
 *.pem
 host_vars/
 vault.pwd
+outputs/
