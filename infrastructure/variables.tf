@@ -10,14 +10,6 @@ variable aws_role_arn {
   description ="The ARN of the role to assume"
 }
 
-variable vsphere_user {
-  description = "User to use with VMWare"
-}
-
-variable vsphere_password {
-  description = "Password to use with VMWare"
-}
-
 variable vsphere_server {
   description = "vSphere Server"
 }

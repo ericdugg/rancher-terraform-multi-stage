@@ -12,8 +12,9 @@ provider "aws" {
 }
 
 provider "vsphere" {
-  user = var.vsphere_user
-  password       = var.vsphere_password
+  version = "~> 1.5"
+  # Use environmental variables VSPHERE_USER
+  # and VSPHERE_PASSWORD for user and password
   vsphere_server = var.vsphere_server
 
   # If you have a self-signed cert

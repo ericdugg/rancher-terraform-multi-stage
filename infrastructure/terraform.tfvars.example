@@ -1,5 +1,3 @@
-vsphere_user           = "your user"
-vsphere_password       = "your password"
 vsphere_server         = "vc03av.oss.co.nz"
 vsphere_dcname         = "OSS-Test"
 vsphere_cluster_name   = "OSS-Test"
@@ -55,4 +53,4 @@ vms_ips = {
 }
 
 # Ansible
-ansible_vault_password = "Eight22"
+ansible_vault_password = "your vault password"
