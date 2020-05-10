@@ -3,7 +3,6 @@ terraform.tfstate*
 terraform.tfvars
 *.auto.tfvars
 hosts.vsphere
-*.pem
 host_vars/
 vault.pwd
 outputs/

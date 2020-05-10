@@ -27,12 +27,12 @@ resource "acme_certificate" "certificate" {
 }
 
 
-resource "local_file" "cert" {
-    content     = acme_certificate.certificate.certificate_pem
-    filename = "${path.module}/rancher.crt.pem"
-}
-resource "local_file" "key" {
-    content     = acme_certificate.certificate.private_key_pem
-    filename = "${path.module}/rancher.key.pem"
-}
+#resource "local_file" "cert" {
+#    content     = acme_certificate.certificate.certificate_pem
+#    filename = "${path.module}/outputs/rancher.crt.pem"
+#}
+#resource "local_file" "key" {
+#    content     = acme_certificate.certificate.private_key_pem
+#    filename = "${path.module}/outputs/rancher.key.pem"
+#}
 
