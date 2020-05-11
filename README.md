@@ -59,6 +59,9 @@ The vault password set in the `vault.pwd` file in the root directory is needed f
 
 Nginx is used for the load balancer rather than HAProxy so these variables are not actually used. As they are defined under the ansible structure a vault password is still required. It is using the default value set for `ansible_vault_password` in `variables.tf`. If you wanted to change to your own vault password if you decided to use HAProxy, you need to remove the vault encrypted files under `provision/ansible/group_vars/lbr and lba`. Then recreate the vault encrypted files with your updated vault password and set it in `terraform.tfvars`.
 
+### ACME Cert
+The provider for ACME is configured to use the staging URL.
+
 ### Outputs
 A number of variables are output for use by the terraform configuration under the `rancher` folder. It uses the state from `infrastructure` by setting up a `terraform_remote_state` s3 backend pointing at it. The variables exported are:
 
@@ -76,7 +79,20 @@ Use `terraform.tfvars.example` as a template.
 Run `terraform apply` which provisions only one resouce:
 - null_resource.ansible_provision
 
-It is a null resource which uses a local provisioner to run the playbook under ansible called `rancher.yml`. This configures the load balancers with nginx (lba load listen on 443 and 6443 and load balance to the node servers on port 6443 and lbr load balancers listen on 443 and 80 and load balance to port 80 and 443 on the load balancers). It also configures keepalived with the floating IP for rancher on the lbr load balancers and for kube-apiserver on the lba load balancers. On the nodes it installs docker, configures kernel settings, modules, and ssh configuration required for a high availablity installation. It also updates the OS CA store with the ACME fakelerootx1.pem and fakeleintermediatex1.pem certs so the ACME staging cert will be trusted.
+It is a null resource which uses a local provisioner to run the playbook under ansible called `rancher.yml`. This configures the load balancers with nginx (lba load balancers listen on 443 and 6443 and load balance to the node servers on port 6443 and lbr load balancers listen on 443 and 80 and load balance to port 80 and 443 on the load balancers). It also configures keepalived with the floating IP for rancher on the lbr load balancers and for kube-apiserver on the lba load balancers. On the nodes it installs docker, configures kernel settings, modules, and ssh configuration required for a high availablity installation. It also updates the OS CA store with the ACME fakelerootx1.pem and fakeleintermediatex1.pem certs so the ACME staging cert will be trusted.
 
-Look at `group_vars/*` for configuration.
+Look at `ansible/group_vars/*` for configuration.
 
+## rancher
+Use `terraform.tfvars.example` as a template.
+Run `terraform apply` which provisions the RKE cluster, cattle-system namespace, secrets for the ACME CERT and CA, Rancher application installed using HELM, and bootstraps the cluster setting the admin password and server-url.
+
+This relies on output variables from the infrastructure folder state and a `terraform_remote_state` data object is configured using the appropriate S3 configuration.
+
+A `kube_config_cluster.yml` file is written to `outputs` and you can use this to connect with kubectl by setting your `KUBECONFIG` ENV VAR to this. It is pointing at the kube-apiserver load balanced DNS name for the server setting. 
+
+### Certs
+Since we are bringing our own Certs from ACME which are staging Certs we need to create a secret for the Cert. This needs to be a concatanation of the cert itself and the intermediate cert used to sign it. We also need a secret for the CA Cert. When configuring the rancher install using HELM we set `ingress.tls.source` to `secret` and `privateCA` to `true`.
+
+### Rke
+This uses a community provider for rke and version 1.0.0-rc5. It needs to be under `~/.terraform.d/plugins` and named `terraform-provider-rke_v1.0.0-rc5`. The github repo is `https://github.com/rancher/terraform-provider-rke`.
