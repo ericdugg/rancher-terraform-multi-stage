@@ -58,3 +58,15 @@ The vault password set in the `vault.pwd` file in the root directory is needed f
 - `vault_haproxy_admin_password`
 
 Nginx is used for the load balancer rather than HAProxy so these variables are not actually used. As they are defined under the ansible structure a vault password is still required. It is using the default value set for `ansible_vault_password` in `variables.tf`. If you wanted to change to your own vault password if you decided to use HAProxy, you need to remove the vault encrypted files under `provision/ansible/group_vars/lbr and lba`. Then recreate the vault encrypted files with your updated vault password and set it in `terraform.tfvars`.
+
+### Outputs
+A number of variables are output for use by the terraform configuration under the `rancher` folder. It uses the state from `infrastructure` by setting up a `terraform_remote_state` s3 backend pointing at it. The variables exported are:
+
+- node_ips
+- domain
+- vm_username
+- ssh_key_path
+- cert
+- cert_key
+- rancher_dns_name
+- rancher_api_dns_name
