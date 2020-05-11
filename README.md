@@ -25,5 +25,15 @@ for Vsphere:
 - 3 nodes for the rke cluster where the rancher application is deployed
 - various network and template related resources
 
+VSphere uses packer created standard OSS image of Centos 7 (copied from Packer folder).
 
+After a successful terraform run, you'll have `hosts.vsphere` file created in the root working dir, which is the ansible inventory.
 
+### Credentials
+
+For AWS you will need two AWS profiles setup.  The OSS one that should have your AWS credentials to connect to the login account.
+`` sh
+[profile oss]
+output = json
+region = ap-southeast-2
+``
