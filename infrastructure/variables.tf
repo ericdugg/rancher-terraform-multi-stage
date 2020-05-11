@@ -115,3 +115,8 @@ variable "vm_username_password" {
   description = "Password for username used for SSH access to the VMs"
   default     = "centos"
 }
+
+variable "ansible_vault_password" {
+  type        = string
+  description = "Password for ansible vault"
+}
