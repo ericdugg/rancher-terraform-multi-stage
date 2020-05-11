@@ -37,3 +37,9 @@ For AWS you will need two AWS profiles setup.  The OSS one that should have your
 output = json
 region = ap-southeast-2
 ```
+You will also need a profile in your .aws/config that uses the oss source profile, and defines the following role_arn, so that the ACME route53 provider can connect to AWS.
+``` sh
+[profile labterraform]
+role_arn = arn:aws:iam::085032814280:role/OSS_Terraform_no_MFA
+source_profile = oss
+```
