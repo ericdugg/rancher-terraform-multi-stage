@@ -72,4 +72,11 @@ A number of variables are output for use by the terraform configuration under th
 - rancher_api_dns_name
 
 ## provision
+Use `terraform.tfvars.example` as a template.
+Run `terraform apply` which provisions only one resouce:
+- null_resource.ansible_provision
+
+It is a null resource which uses a local provisioner to run the playbook under ansible called `rancher.yml`. This configures the load balancers with nginx (lba load listen on 443 and 6443 and load balance to the node servers on port 6443 and lbr load balancers listen on 443 and 80 and load balance to port 80 and 443 on the load balancers). It also configures keepalived with the floating IP for rancher on the lbr load balancers and for kube-apiserver on the lba load balancers. On the nodes it installs docker, configures kernel settings, modules, and ssh configuration required for a high availablity installation. It also updates the OS CA store with the ACME fakelerootx1.pem and fakeleintermediatex1.pem certs so the ACME staging cert will be trusted.
+
+Look at `group_vars/*` for configuration.
 
