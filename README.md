@@ -51,3 +51,10 @@ source set_vmware_pwd.sh
 
 ### Ansible
 The terraform code uses a local provisioner to run a playbook under ansible called `ssh-sudo.yml`. This generates a ssh keypair. It copies the public key onto all the infrastructure servers and writes the private key to `~/.ssh/<project>-id_rsa`.
+
+### Vault
+The vault password set in the `vault.pwd` file in the root directory is needed for unlocking some vault protected variables used by Ansible under `provision/ansible`. These variables are:
+- `vault_haproxy_admin_user`
+- `vault_haproxy_admin_password'
+
+They are set at the groups level for lbr and lba. These will needed to be recreated with whatever your vault password is and then update that password under terraform.tfvars before running `terraform apply`.
