@@ -6,7 +6,7 @@ They are meant to be run in this order:
 - provision
 - rancher
 
-## Infrastructure
+## infrastructure
 Use `terraform.tfvars.example` as a template.
 Run `terraform apply` to provision infrastructure.
 Which includes, for AWS:
@@ -70,3 +70,6 @@ A number of variables are output for use by the terraform configuration under th
 - cert_key
 - rancher_dns_name
 - rancher_api_dns_name
+
+## provision
+
