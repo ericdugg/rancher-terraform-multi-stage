@@ -27,7 +27,7 @@ for Vsphere:
 
 VSphere uses packer created standard OSS image of Centos 7 (copied from Packer folder).
 
-After a successful terraform run, you'll have `hosts.vsphere` file created in the root working dir, which is the ansible inventory.
+After a successful terraform run, you'll have `hosts.vsphere` file created in the root working dir, which is the ansible inventory. You will also have host vars files for each of the load balancers created under `provision/ansible/host_vars` matching the FQDN for each load balancer. This sets the `keepalived_priority` for each pair of the HA load balancers for use by the ansible playbooks called by the Terraform provision code.
 
 ### Credentials
 
@@ -43,3 +43,11 @@ You will also need a profile in your .aws/config that uses the oss source profil
 role_arn = arn:aws:iam::085032814280:role/OSS_Terraform_no_MFA
 source_profile = oss
 ```
+For VSphere you'll need a username / password to use the API. There is a script to configure the ENV VAR with your username and password.
+
+``` sh
+source set_vmware_pwd.sh
+```
+
+### Ansible
+

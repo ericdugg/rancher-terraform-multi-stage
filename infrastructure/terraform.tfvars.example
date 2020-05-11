@@ -51,6 +51,3 @@ vms_ips = {
   node2        = "192.168.210.248",
   ipv4_netmask = 24,
 }
-
-# Ansible
-ansible_vault_password = "your vault password"

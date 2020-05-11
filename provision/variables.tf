@@ -9,3 +9,8 @@ variable aws_region {
 variable aws_role_arn {
   description ="The ARN of the role to assume"
 }
+
+variable "ansible_vault_password" {
+  type        = string
+  description = "Password for ansible vault"
+}
