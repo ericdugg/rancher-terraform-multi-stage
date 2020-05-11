@@ -32,8 +32,8 @@ After a successful terraform run, you'll have `hosts.vsphere` file created in th
 ### Credentials
 
 For AWS you will need two AWS profiles setup.  The OSS one that should have your AWS credentials to connect to the login account.
-`` sh
+``` sh
 [profile oss]
 output = json
 region = ap-southeast-2
-``
+```
