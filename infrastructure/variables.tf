@@ -119,4 +119,5 @@ variable "vm_username_password" {
 variable "ansible_vault_password" {
   type        = string
   description = "Password for ansible vault"
+  default     = "Eight22"
 }

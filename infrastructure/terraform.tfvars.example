@@ -53,4 +53,4 @@ vms_ips = {
 }
 
 # Ansible
-ansible_vault_password = "your vault password"
+# ansible_vault_password = "set here rather than user default"

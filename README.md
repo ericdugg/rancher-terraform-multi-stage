@@ -55,6 +55,6 @@ The terraform code uses a local provisioner to run a playbook under ansible call
 ### Vault
 The vault password set in the `vault.pwd` file in the root directory is needed for unlocking some vault protected variables used by Ansible under `provision/ansible`. These variables are:
 - `vault_haproxy_admin_user`
-- `vault_haproxy_admin_password'
+- `vault_haproxy_admin_password`
 
-They are set at the groups level for lbr and lba. These will needed to be recreated with whatever your vault password is and then update that password under terraform.tfvars before running `terraform apply`.
+Nginx is used for the load balancer rather than HAProxy so these variables are not actually used. As they are defined under the ansible structure a vault password is still required. It is using the default value set for `ansible_vault_password` in `variables.tf`. If you wanted to change to your own vault password if you decided to use HAProxy, you need to remove the vault encrypted files under `provision/ansible/group_vars/lbr and lba`. Then recreate the vault encrypted files with your updated vault password and set it in `terraform.tfvars`.
