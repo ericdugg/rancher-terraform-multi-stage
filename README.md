@@ -27,7 +27,7 @@ for Vsphere:
 
 VSphere uses packer created standard OSS image of Centos 7 (copied from Packer folder).
 
-After a successful terraform run, you'll have `hosts.vsphere` file created in the root working dir, which is the ansible inventory. You will also have host vars files for each of the load balancers created under `provision/ansible/host_vars` matching the FQDN for each load balancer. This sets the `keepalived_priority` for each pair of the HA load balancers for use by the ansible playbooks called by the Terraform provision code.
+After a successful terraform run, you'll have `hosts.vsphere` file created in the root working dir, which is the ansible inventory. You will also have host vars files for each of the load balancers created under `provision/ansible/host_vars` matching the FQDN for each load balancer. This sets the `keepalived_priority` variable for each pair of the HA load balancers for use by the ansible playbooks called by the Terraform provision code. You will also have a ssh config created under `~/.ssh/config` setting up access to the servers using ssh keys.
 
 ### Credentials
 
@@ -50,4 +50,4 @@ source set_vmware_pwd.sh
 ```
 
 ### Ansible
-
+The terraform code uses a local provisioner to run a playbook under ansible called `ssh-sudo.yml`. This generates a ssh keypair. It copies the public key onto all the infrastructure servers and writes the private key to `~/.ssh/<project>-id_rsa`
