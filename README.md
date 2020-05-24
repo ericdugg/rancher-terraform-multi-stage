@@ -8,7 +8,6 @@ They are meant to be run in this order:
 
 ## infrastructure
 Use `terraform.tfvars.example` as a template.
-Update `backend.tf` with your appropriate values for keeping state in aws.
 Run `terraform apply` to provision infrastructure.
 Which includes, for AWS:
 - `node` Route53 records
