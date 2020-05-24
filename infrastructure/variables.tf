@@ -14,18 +14,6 @@ variable aws_role_arn {
   description ="The ARN of the role to assume"
 }
 
-variable aws_s3_bucket {
-  description ="The AWS s3 bucket for state"
-}
-
-variable aws_s3_bucket_key {
-  description ="The AWS s3 bucket key for state"
-}
-
-variable aws_dynamodb_table {
-  description ="The AWS Dynamo DB table name for state"
-}
-
 variable email_address {
   description ="Email address for ACME registration"
 }
