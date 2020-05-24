@@ -25,23 +25,23 @@ for Vsphere:
 - 3 nodes for the rke cluster where the rancher application is deployed
 - various network and template related resources
 
-VSphere uses packer created standard OSS image of Centos 7 (copied from Packer folder).
+VSphere set up is based on a Centos 7 image.
 
 After a successful terraform run, you'll have `hosts.vsphere` file created in the root working dir, which is the ansible inventory. Also under the root working dir will be a `vault.pwd` file with your vault password. You will also have host vars files for each of the load balancers created under `provision/ansible/host_vars` matching the FQDN for each load balancer. This sets the `keepalived_priority` variable for each pair of the HA load balancers for use by the ansible playbooks called by the Terraform provision code. You will also have a ssh config created under `~/.ssh/config` setting up access to the servers using ssh keys.
 
 ### Credentials
 
-For AWS you will need two AWS profiles setup.  The OSS one that should have your AWS credentials to connect to the login account.
+For AWS you will need two AWS profiles setup.  The main one that should have your AWS credentials to connect to the login account.
 ``` sh
-[profile oss]
+[profile <name>]
 output = json
-region = ap-southeast-2
+region = <region>
 ```
-You will also need a profile in your .aws/config that uses the oss source profile, and defines the following role_arn, so that the ACME route53 provider can connect to AWS.
+You will also need a profile in your .aws/config that uses the above source profile, and defines a role_arn, so that the ACME route53 provider can connect to AWS.
 ``` sh
-[profile labterraform]
-role_arn = arn:aws:iam::085032814280:role/OSS_Terraform_no_MFA
-source_profile = oss
+[profile <name>]
+role_arn = <role for terraform>
+source_profile = <source_name>
 ```
 For VSphere you'll need a username / password to use the API. There is a script to configure the ENV VAR with your username and password.
 
