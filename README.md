@@ -34,15 +34,15 @@ After a successful terraform run, you'll have `hosts.vsphere` file created in th
 
 For AWS you will need two AWS profiles setup.  The main one that should have your AWS credentials to connect to the login account.
 ``` sh
-[profile <name>]
+[profile <main profile name>]
 output = json
 region = <region>
 ```
 You will also need a profile in your .aws/config that uses the above source profile, and defines a role_arn, so that the ACME route53 provider can connect to AWS.
 ``` sh
-[profile <name>]
+[profile <sub profile name>]
 role_arn = <role for terraform>
-source_profile = <source_name>
+source_profile = <main profile name>
 ```
 For VSphere you'll need a username / password to use the API. There is a script to configure the ENV VAR with your username and password.
 
