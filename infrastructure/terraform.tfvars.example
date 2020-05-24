@@ -21,9 +21,6 @@ aws_profile            = "<AWS main profile name>"
 aws_sub_profile        = "<AWS sub profile name>
 aws_region             = "<Region>"
 aws_role_arn           = "<Role for terraform>"
-aws_s3_bucket          = "<Bucket for state>"
-aws_s3_bucket_key      = "<Bucket key for state>"
-aws_dynamodb_table     = "<Dynamo DB table for state>"
 
 vm_username            = "centos"
 email_address          = "<ACME registration email address>"
