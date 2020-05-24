@@ -1,10 +1,10 @@
 terraform {
   backend "s3" {
-    bucket = "oss-lab-terraform"
-    key    = "lab/ED/rancher-terraform-multi-stage/infrastructure"
-    region = "ap-southeast-2"
-    profile = "oss"
-    role_arn  = "arn:aws:iam::085032814280:role/OSS_Terraform_no_MFA"
-    dynamodb_table = "terraform_s3_statelock"
+    bucket = "<bucket name>"
+    key    = "<key name>"
+    region = "<region>"
+    profile = "<aws profile>"
+    role_arn  = "<role for terraform>"
+    dynamodb_table = "<table name>"
   }
 }
