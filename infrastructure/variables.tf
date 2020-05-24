@@ -2,6 +2,10 @@ variable aws_profile {
   description = "The AWS profile name set in the credentials file"
 }
 
+variable aws_sub_profile {
+  description = "The AWS sub profile name set in the credentials file"
+}
+
 variable aws_region {
   description = "The AWS region"
 }
@@ -20,6 +24,10 @@ variable aws_s3_bucket_key {
 
 variable aws_dynamodb_table {
   description ="The AWS Dynamo DB table name for state"
+}
+
+variable email_address {
+  description ="Email address for ACME registration"
 }
 
 variable vsphere_server {
