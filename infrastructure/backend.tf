@@ -3,7 +3,7 @@ terraform {
     bucket = "<bucket name>"
     key    = "<key name>"
     region = "<region>"
-    profile = "<aws profile>"
+    profile = "<main profile name>"
     role_arn  = "<role for terraform>"
     dynamodb_table = "<table name>"
   }
