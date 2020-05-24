@@ -6,7 +6,7 @@ resource "tls_private_key" "private_key" {
 # Change the email to yours
 resource "acme_registration" "reg" {
   account_key_pem = tls_private_key.private_key.private_key_pem
-  email_address   = "<your email address>"
+  email_address   = var.email_address
 }
 
 data "aws_region" "current" {}
@@ -20,7 +20,7 @@ resource "acme_certificate" "certificate" {
     config = {
       AWS_HOSTED_ZONE_ID = data.aws_route53_zone.public.zone_id
       AWS_SDK_LOAD_CONFIG = "true"
-      AWS_PROFILE = "<sub profile name>"
+      AWS_PROFILE = var.aws_sub_profile
       AWS_DEFAULT_REGION = data.aws_region.current.name
     }
   }
