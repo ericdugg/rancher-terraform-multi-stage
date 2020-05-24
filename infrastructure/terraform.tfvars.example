@@ -1,11 +1,11 @@
-vsphere_server         = "vc03av.oss.co.nz"
-vsphere_dcname         = "OSS-Test"
-vsphere_cluster_name   = "OSS-Test"
-vsphere_datastore      = "PureM10-VVOL"
-vsphere_netname        = "Test"
+vsphere_server         = "<vsphere server>"
+vsphere_dcname         = "<DC name>"
+vsphere_cluster_name   = "<Cluster name>"
+vsphere_datastore      = "<Datastore>"
+vsphere_netname        = "<Network>"
 vsphere_tmplname       = "centos7"
-vsphere_folder         = "ED-rancher"
-vsphere_storage_policy = "VVol No Requirements Policy"
+vsphere_folder         = "<Folder>"
+vsphere_storage_policy = "<Storage Policy>"
 
 # SSH Key path
 ssh_key_path           = "~/.ssh/rancher-id_rsa"
@@ -13,14 +13,20 @@ ssh_key_path           = "~/.ssh/rancher-id_rsa"
 # SSH config path
 ssh_config_path        ="~/.ssh/config"
 
-lb_rancher_floating_ip = "192.168.210.242"
-lb_api_floating_ip     = "192.168.210.245"
+lb_rancher_floating_ip = "<Keepalived IP for rancher>"
+lb_api_floating_ip     = "<Keepalived IP for API>"
 
 # AWS Provider
-aws_profile            = "oss"
-aws_region             = "ap-southeast-2"
-aws_role_arn           = "arn:aws:iam::085032814280:role/OSS_Terraform_no_MFA"
+aws_profile            = "<AWS main profile name>"
+aws_sub_profile        = "<AWS sub profile name>
+aws_region             = "<Region>"
+aws_role_arn           = "<Role for terraform>"
+aws_s3_bucket          = "<Bucket for state>"
+aws_s3_bucket_key      = "<Bucket key for state>"
+aws_dynamodb_table     = "<Dynamo DB table for state>"
+
 vm_username            = "centos"
+email_address          = "<ACME registration email address>"
 
 # VM Specs Config
 lb_vm_spec = {
@@ -36,19 +42,19 @@ node_vm_spec = {
 }
 
 # VM Network Config
-domain         = "lab.oss.nz"
-ipv4_gateway   = "192.168.210.254"
-dns_servers    = ["192.168.213.4", "192.168.214.4"]
-time_zone      = "Pacific/Auckland"
+domain         = "<Domain name>"
+ipv4_gateway   = "<Gateway IP>"
+dns_servers    = ["<DNS IP>", "<DNS IP>"]
+time_zone      = "<Timezone>"
 
 vms_ips = {
-  lbr0          = "192.168.210.240",
-  lbr1          = "192.168.210.241",
-  lba0          = "192.168.210.243",
-  lba1          = "192.168.210.244",
-  node0        = "192.168.210.246",
-  node1        = "192.168.210.247",
-  node2        = "192.168.210.248",
+  lbr0          = "<IP Address>",
+  lbr1          = "<IP Address>",
+  lba0          = "<IP Address>",
+  lba1          = "<IP Address>",
+  node0        = "<IP Address>",
+  node1        = "<IP Address>",
+  node2        = "<IP Address>",
   ipv4_netmask = 24,
 }
 
