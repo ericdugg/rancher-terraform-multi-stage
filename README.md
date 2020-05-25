@@ -8,7 +8,7 @@ They are meant to be run in this order:
 
 ## infrastructure
 Use `terraform.tfvars.example` as a template.
-Updated `backend.tf` with your AWS details for state.
+Update `backend.tf` with your AWS details for state.
 Run `terraform apply` to provision infrastructure.
 Which includes, for AWS:
 - `node` Route53 records
@@ -77,7 +77,8 @@ A number of variables are output for use by the terraform configuration under th
 
 ## provision
 Use `terraform.tfvars.example` as a template.
-Updated `backend.tf` with your AWS details for state.
+Update `backend.tf` with your AWS details for state.
+Update `ansible/group_vars` for `lba` and `lbr` to set keepalived floating IP for api and rancher.
 Run `terraform apply` which provisions only one resouce:
 - null_resource.ansible_provision
 
@@ -87,7 +88,7 @@ Look at `ansible/group_vars/*` for configuration.
 
 ## rancher
 Use `terraform.tfvars.example` as a template.
-Updated `backend.tf` and `remote.tf` with your AWS details for state.
+Update `backend.tf` and `remote.tf` with your AWS details for state.
 Run `terraform apply` which provisions the RKE cluster, cattle-system namespace, secrets for the ACME CERT and CA, Rancher application installed using HELM, and bootstraps the cluster setting the admin password and server-url.
 
 This relies on output variables from the infrastructure folder state and a `terraform_remote_state` data object is configured using the appropriate S3 configuration.
