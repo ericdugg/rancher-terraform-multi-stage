@@ -1,4 +1,4 @@
-keepalived_vip: '192.168.210.245'
+keepalived_vip: '<keepalived vip for api>'
 keepalived_router_id: 'rancher'
 keepalived_virtual_router_id: '55'
 haproxy_anchor_ip: "{{ keepalived_vip }}"
