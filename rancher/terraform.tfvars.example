@@ -3,4 +3,4 @@ aws_profile            = "<AWS main profile name>"
 aws_region             = "<Region>"
 aws_role_arn           = "<Role for terraform>"
 # Rancher
-rancher_password       = "password to set for rancher"
+rancher_password       = "<password to set for rancher>"
